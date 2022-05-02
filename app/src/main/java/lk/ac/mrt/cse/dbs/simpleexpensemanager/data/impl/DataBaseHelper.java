@@ -16,7 +16,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
 
     // Database Name
-    private static final String DATABASE_NAME = "miniProject";
+    private static final String DATABASE_NAME = "190376N_db";
 
     public DataBaseHelper(Context context) {
         super(context, DATABASE_NAME, null,  DATABASE_VERSION);
