@@ -16,14 +16,55 @@
 
 package lk.ac.mrt.cse.dbs.simpleexpensemanager;
 
-import android.app.Application;
-import android.test.ApplicationTestCase;
 
-/**
- * <a href="http://d.android.com/tools/testing/testing_android.html">Testing Fundamentals</a>
- */
-public class ApplicationTest extends ApplicationTestCase<Application> {
-    public ApplicationTest() {
-        super(Application.class);
+import android.content.Context;
+
+
+import androidx.test.core.app.ApplicationProvider;
+
+import org.junit.Before;
+
+import org.junit.Test;
+
+
+import java.util.List;
+
+import lk.ac.mrt.cse.dbs.simpleexpensemanager.control.ExpenseManager;
+import lk.ac.mrt.cse.dbs.simpleexpensemanager.control.PersistentDemoExpenseManager;
+import lk.ac.mrt.cse.dbs.simpleexpensemanager.control.exception.ExpenseManagerException;
+import lk.ac.mrt.cse.dbs.simpleexpensemanager.data.exception.InvalidAccountException;
+import lk.ac.mrt.cse.dbs.simpleexpensemanager.data.model.ExpenseType;
+
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
+public class ApplicationTest {
+    private   ExpenseManager expenseManager;
+
+    @Before
+    public  void setUp() throws ExpenseManagerException {
+        Context context = ApplicationProvider.getApplicationContext();
+        expenseManager= new PersistentDemoExpenseManager(context);
     }
+    @Test
+    public  void addAccountTest(){
+        expenseManager.addAccount("12345","Peoples","Sugath",500.0);
+        List<String> accountNumbers =expenseManager.getAccountNumbersList();
+        assertTrue(accountNumbers.contains("12345"));
+    }
+
+
+    @Test
+    public  void addTransactionTest() {
+        int noOfTransaction = expenseManager.getTransactionLogs().size();
+
+        try {
+            expenseManager.updateAccountBalance("190376", 2, 5, 2022, ExpenseType.EXPENSE, "200");
+            assertEquals(noOfTransaction + 1, expenseManager.getTransactionLogs().size());
+        } catch (InvalidAccountException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

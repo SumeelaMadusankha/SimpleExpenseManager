@@ -10,7 +10,7 @@ import android.support.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-import lk.ac.mrt.cse.dbs.simpleexpensemanager.data.model.Account;
+
 
 public class DataBaseHelper extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
@@ -35,7 +35,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS account");
+        db.execSQL("DROP TABLE IF EXISTS accounts");
         db.execSQL("DROP TABLE IF EXISTS transactions");
         // Create tables again
         onCreate(db);
