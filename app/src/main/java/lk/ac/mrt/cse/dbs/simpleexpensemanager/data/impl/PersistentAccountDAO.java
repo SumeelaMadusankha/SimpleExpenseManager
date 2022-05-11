@@ -117,7 +117,10 @@ public class PersistentAccountDAO extends DataBaseHelper implements AccountDAO {
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "SELECT balance FROM accounts WHERE accountNo = '"+ accountNo +"' ;";
         Cursor cursor = db.rawQuery(query,null);
-        cursor.moveToFirst();
+        if (!cursor.moveToFirst()) {
+            String message = "Account" + accountNo + "is invalid.";
+            throw new InvalidAccountException(message);
+        }
         double balance = cursor.getDouble(0);
         switch(expenseType){
             case EXPENSE:
